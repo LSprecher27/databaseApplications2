@@ -1,6 +1,6 @@
 **Before you start:** rename this file to `unit3a_lastname.md`, using your own last name. Read `unit3a_Walkthrough.md` first. Commit and push when you're done.
 
-**Name:**
+**Name:** Luke Sprecher
 
 ---
 
@@ -17,24 +17,31 @@ Use the **Execute SQL** tab. You know enough SQL from Unit 2 for all of these. P
 **a.** How many rows are in `games_flat`?
 
 ```sql
-
+SELECT COUNT(*) 
+FROM games_flat;
 ```
 
-**Answer:**
+**Answer:** 260
 
 
 **b.** How many rows have `home_city = 'Chicago'`? How many have `away_city = 'Chicago'`?
 
 ```sql
+SELECT COUNT(*) 
+FROM games_flat
+WHERE home_city = 'Chicago';
 
+SELECT COUNT(*) 
+FROM games_flat
+WHERE away_city = 'Chicago';
 ```
 
-**Answer:**
+**Answer:** 34 both 16 home 18 away
 
 
 **c.** So how many times is the fact any team "plays in Chicago, Illinois" typed into this table?
 
-**Answer:**
+**Answer:** 16 times
 
 
 ## 2. Find the mistakes
@@ -53,22 +60,24 @@ If a list has more than that, something in it is wrong. Once you find a wrong va
 
 | # | game_id | Which column | What it says | What it should say |
 |---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
-| 6 | | | | |
-| 7 | | | | |
-| 8 | | | | |
+| 1 | 62 | home_team| Clevland Cavaliers|Cleveland Cavaliers |
+| 2 | 247|home_team |Chicago Buls | Chicago Bulls|
+| 3 |206 |away_team |Chicago Bull | Chicago Bulls|
+| 4 |108	 | away_team| Pheonix Suns	|Phoenix Suns |
+| 5 |202 |home_city |Philidelphia |Philadelphia |
+| 6 |241 | home_state|IL |Illinois |
+| 7 |257 |away_state |TX |Texas |
+| 8 | 103|away_state |OH |Ohio |
 
 **d.** Write a query that counts every Bulls game by **team name** (home or away). Compare your count to your city count from **b**. Which count is right, and why are they different?
 
 ```sql
-
+SELECT COUNT(*)
+FROM games_flat
+WHERE home_team = 'Chicago Bulls' OR away_team = 'Chicago Bulls';
 ```
 
-**Answer:**
+**Answer:** There are 32 rows, which varies from the original. The one we had before was correct, they had just misspelled names then they didn't pop up.
 
 
 ## 3. Spot the anomalies in a new table
@@ -89,53 +98,29 @@ For each scenario, name the anomaly (**update**, **insert**, or **delete**) and 
 
 **Scenario A** — Emma Fox drops Art I, so her Art I row is deleted.
 
-**Which anomaly:**
+**Which anomaly:** Delete
 
-**What goes wrong:**
+**What goes wrong:** Mr Kerr gets deleted too
 
 
 **Scenario B** — The school hires a new teacher, Ms. Reyes, who will use Room 205. She has no students yet.
 
-**Which anomaly:**
+**Which anomaly:** Insert
 
-**What goes wrong:**
+**What goes wrong:** Teacher doesn't have enough data to be inserted
 
 
 **Scenario C** — Mr. Grant moves from Room 214 to Room 220. How many rows have to change, and what happens if you miss one?
 
-**Which anomaly:**
+**Which anomaly:** Update
 
-**What goes wrong:**
+**What goes wrong:** The rows would have to change causing a conflict of data
 
 
 **e.** In `denormalized_demo.db`, team facts (city, state, conference, division) were moved into their own table, `teams`. Which facts in `class_schedule` should be moved into their own table the same way?
 
-**Answer:**
+**Answer:** The studemts, removes data redundancy making the teachers only having to be displayed once
 
-
-## 4. The fixed version
-
-Now look at the tables **`teams`** and **`games`** in the same database.
-
-**f.** In the fixed version, how many rows would you change to move the Bulls to a new city? Which table is that row in?
-
-**Answer:**
-
-
-**g.** Look up the Bulls' `team_id` in `teams`. Then write a query on **`games`** (not `games_flat`) that counts every Bulls game using that number. Which count from Part 1 or 2 does it match? Why can't the `games` table have the kind of mistake you found in Part 2?
-
-```sql
-
-```
-
-**Answer:**
-
-
-**h.** Write one query that shows the game date, home team name, away team name, home points, and away points for **Bulls games only**, sorted by date. Start from the walkthrough's query. You will need to add columns and a `WHERE`.
-
-```sql
-
-```
 
 ## Closing 3a — Vocabulary
 
@@ -143,9 +128,9 @@ Your words, not the slide's.
 
 | Term | Your definition |
 |---|---|
-| Redundancy | |
-| Update anomaly | |
-| Insert anomaly | |
-| Delete anomaly | |
-| Normalization | |
+| Redundancy |Something showing up multiple times |
+| Update anomaly |Changing things in multiple areas leading to issues in a database |
+| Insert anomaly |Adding something to a file without enough data to keep it |
+| Delete anomaly |Deleting something that accidentally removes other data too |
+| Normalization | Fixing datasets and removing redundancy |
 
