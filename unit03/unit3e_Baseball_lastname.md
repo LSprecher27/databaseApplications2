@@ -1,8 +1,8 @@
 **Before you start:** rename this file to `unit3e_Baseball_lastname.md`, using your own last name. Read `unit3e_Walkthrough.md` and `unit3e_Baseball_Client.md` first. Commit and push when you're done.
 
-**Name:**
+**Name:** Connor
 
-**Partner(s):**
+**Partner(s):** Luke
 
 ---
 
@@ -14,7 +14,7 @@ Both partners turn in the same design.
 
 
 **Link to our Google Sheet (or the file name if you committed the xlsx):**
-
+unit3e_Baseball.xlsx
 
 ## 1. The client's spreadsheet
 
@@ -22,17 +22,17 @@ Look at the `Client_Export` tab.
 
 **a.** Which column breaks 1NF? Which 1NF rule does it break?
 
-**Answer:**
+**Answer:** bat_throws. Each cell must hold one value.
 
 
 **b.** How many rows say "Cleveland Guardians" and "Progressive Field"? If the Guardians moved to a new ballpark, what would you have to do? What is that problem called?
 
-**Answer:**
+**Answer:** 9 rows say Cleveland Guardians, and Progressive Field has 10. if the team moved, I'd change the ballpark in all 10 rows. That is an update anomaly
 
 
 **c.** Can `player_name` be the primary key of a players table? Use the data to explain why not. What should the key be instead?
 
-**Answer:**
+**Answer:** No, because names aren't unique. Two differnt players are named Max Muncy, so the key should be player_id
 
 
 ## 2. First normal form
@@ -41,12 +41,12 @@ On the `1NF` tab, split `bats_throws` into `bats` and `throws` (Data → Split t
 
 **d.** Why is one value per cell better here? Name a question you couldn't easily answer before the split.
 
-**Answer:**
+**Answer:** Each hand becomes its own column, so you can filter and count by it.
 
 
 **e.** What is the primary key of the 1NF table? Why isn't `player_id` alone enough? (Hint: find a player who was traded.)
 
-**Answer:**
+**Answer:** The key is player_id, and team_id.
 
 
 ## 3. Second normal form — the whole key
@@ -55,21 +55,21 @@ For each column, check what it depends on: the player, the team, or both. Use yo
 
 | Column | Depends on the player? | Depends on the team? | Needs the whole key? |
 |---|:-:|:-:|:-:|
-| `birth_country` | | | |
-| `ballpark` | | | |
-| `home_runs` | | | |
-| `games` | | | |
+| `birth_country` | Yes | No | No |
+| `ballpark` | No | Yes | No |
+| `home_runs` | Yes | Yes | Yes |
+| `games` | Yes | Yes | Yes |
 
 **f.** What is it called when a column depends on only part of the key? Which tables did you move those columns into?
 
-**Answer:**
+**Answer:** A partial dependency.
 
 
 ## 4. Third normal form — nothing but the key
 
 **g.** In your TEAMS table, `league` depends on something other than the team. What does it depend on? What is that problem called?
 
-**Answer:**
+**Answer:** It depends on division, not on the team. That is called a transitive dependency
 
 
 **h.** How did you fix it?
